@@ -4,7 +4,7 @@
 يقرأ الإعداد من متغيّرات البيئة (Environment Variables) أو من keys.json،
 ويرسل كل الملفات الموجودة داخل مجلد files/ بعد قبولك للطلب.
 """
-import os, json, time, glob, html, threading, requests
+import os, re, json, time, glob, html, threading, requests
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +29,9 @@ TOKEN = CFG["bot_token"]
 OWNER = int(CFG["owner_chat_id"])
 PRICE = "50 د.ل / 6$"  # السعر مثبّت هنا ويتجاهل PRICE في إعدادات الاستضافة
 BANK = str(CFG.get("bank_info", "—")).replace("\\n", "\n")
+# بيانات التحويل في الاستضافة قد تحتوي سعراً قديماً؛ استبدله بالسعر الجديد
+BANK = re.sub(r"(?:\$|USD)\s*\d+(?:[.,]\d+)?|\d+(?:[.,]\d+)?\s*(?:\$|USD|دولار)", "6$", BANK)
+BANK = re.sub(r"\d+(?:[.,]\d+)?\s*(?:د\.ل|دينار)", "50 د.ل", BANK)
 BOOK_TITLE = CFG.get("book_title", "مدير السوشيال ميديا بالذكاء الاصطناعي")
 FILES = sorted(glob.glob(os.path.join(BASE, "files", "*")))
 API = f"https://api.telegram.org/bot{TOKEN}"
@@ -80,6 +83,7 @@ WELCOME = (
 
 def pay_instructions():
     return ("🧾 <b>خطوات الطلب</b>\n\n"
+            f"💰 المبلغ: <b>{html.escape(str(PRICE))}</b>\n\n"
             f"1) حوّل قيمة الكتاب على:\n{html.escape(str(BANK))}\n\n"
             "2) صوّر إثبات التحويل وأرسله هنا كصورة.\n\n"
             "3) بعد التأكيد يوصلك الكتاب والقوالب مباشرة. ⏳")
