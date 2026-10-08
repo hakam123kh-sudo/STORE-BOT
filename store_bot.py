@@ -27,7 +27,7 @@ def _cfg():
 CFG = _cfg()
 TOKEN = CFG["bot_token"]
 OWNER = int(CFG["owner_chat_id"])
-PRICE = CFG.get("price", "29.99$")
+PRICE = CFG.get("price", "50 د.ل / 6$")
 BANK = str(CFG.get("bank_info", "—")).replace("\\n", "\n")
 BOOK_TITLE = CFG.get("book_title", "مدير السوشيال ميديا بالذكاء الاصطناعي")
 FILES = sorted(glob.glob(os.path.join(BASE, "files", "*")))

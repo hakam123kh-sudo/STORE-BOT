@@ -16,7 +16,7 @@
 4) في Environment variables أضف (من ملف .env.example):
    BOT_TOKEN        = التوكن حقك
    OWNER_CHAT_ID    = 7784517251
-   PRICE            = 29.99$ / 199 د.ل
+   PRICE            = 50 د.ل / 6$
    BOOK_TITLE       = مدير السوشيال ميديا بالذكاء الاصطناعي
    BANK_INFO        = (بيانات التحويل — انسخها من .env.example)
 5) Deploy. خلاص، البوت شغّال 24/7.
